@@ -25,31 +25,22 @@ const getImages = async (page = 1) => {
     });
 
     images = res.data.hits;
-    // const totalHits = res.data.totalHits;
 
-    // if (page === 1 || q !== '') {
-    //   images = [];
-    // }
-
-    // images = images.concat(res.data.hits); // Додаємо нові зображення до загального масиву
     const totalHits = res.data.totalHits;
-    // console.log(images);
-
-    console.log(totalHits > per_page);
-    console.log(images.length === per_page);
-    console.log(images.length);
 
     if (totalHits > per_page && images.length === per_page) {
       loadBtn.style.display = 'flex';
     } else {
       loadBtn.style.display = 'none';
+      Notiflix.Notify.failure(
+        'We are sorry, but you have reached the end of search results.'
+      );
     }
 
     if (images.length === 0) {
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-      // loadBtn.style.display = 'none';
     } else {
       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
     }
